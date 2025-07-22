@@ -4,7 +4,7 @@
   <groupId>me.xuanlam2007</groupId>
   <artifactId>RPGAttackSystem</artifactId>
   <name>RPGAttackSystem</name>
-  <version>1.0</version>
+  <version>1.1</version>
   <build>
     <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
     <defaultGoal>clean package</defaultGoal>

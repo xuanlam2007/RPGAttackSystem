@@ -1,6 +1,3 @@
-// Author: XuanLam
-// Made by XuanLam with love <3
-
 package me.xuanlam2007
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -15,32 +12,38 @@ class CommandHandler(private val plugin: RPGAttackSystem) : CommandExecutor, Tab
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<String>): Boolean {
         if (!cmd.name.equals("rpgattacksystem", ignoreCase = true)) return false
 
-        val cfg = plugin.config
-        val noPermRaw = cfg.getString("permissionDeniedMessage") ?: "&cYou don’t have permission."
-        val noPerm = colorSerializer.deserialize(noPermRaw)
+        // Block non-ops right away
+        if (!sender.isOp) {
+            val noPermRaw = plugin.config.getString("permissionDeniedMessage")
+                ?: "&cYou don’t have permission."
+            sender.sendMessage(colorSerializer.deserialize(noPermRaw))
+            return true
+        }
 
-        return when (args.getOrNull(0)?.lowercase()) {
+        when (args.getOrNull(0)?.lowercase()) {
             "reload" -> {
-                if (!sender.hasPermission("rpgattacksystem.reload")) {
-                    sender.sendMessage(noPerm)
-                } else {
-                    plugin.reloadConfig()
-                    sender.sendMessage("§aRPGAttackSystem config reloaded.")
-                }
-                true
+                plugin.reloadConfig()
+                sender.sendMessage("§aRPGAttackSystem config reloaded.")
             }
             "info" -> {
-                if (!sender.hasPermission("rpgattacksystem.info")) {
-                    sender.sendMessage(noPerm)
-                } else {
-                    sendInfo(sender)
-                }
-                true
+                sendInfo(sender)
             }
             else -> {
                 sender.sendMessage("§eUsage: /ras <reload|info>")
-                true
             }
+        }
+        return true
+    }
+
+    override fun onTabComplete(sender: CommandSender, cmd: Command, label: String, args: Array<String>): List<String> {
+        if (!cmd.name.equals("rpgattacksystem", ignoreCase = true)) return emptyList()
+        if (!sender.isOp) return emptyList()
+
+        return if (args.size == 1) {
+            listOf("reload", "info")
+                .filter { it.startsWith(args[0].lowercase()) }
+        } else {
+            emptyList()
         }
     }
 
@@ -58,14 +61,5 @@ class CommandHandler(private val plugin: RPGAttackSystem) : CommandExecutor, Tab
         sender.sendMessage("     ├─ §eFatigue Duration: §f${cfg.getInt("fatigueDurationTicks") / 20.0}s")
         sender.sendMessage("")
         sender.sendMessage("§m                                                         §f")
-    }
-
-    override fun onTabComplete(sender: CommandSender, cmd: Command, label: String, args: Array<String>): List<String> {
-        if (!cmd.name.equals("rpgattacksystem", ignoreCase = true)) return emptyList()
-        if (args.size == 1) {
-            return listOf("reload", "info")
-                .filter { it.startsWith(args[0].lowercase()) }
-        }
-        return emptyList()
     }
 }
