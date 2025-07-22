@@ -1,0 +1,19 @@
+name: RPGAttackSystem
+version: '1.0'
+main: me.xuanlam2007.RPGAttackSystem
+api-version: '1.21'
+author: XuanLam
+prefix: §8[§cRPG&9Attack§aSystem§8]§f
+website: https://github.com/xuanlam2007
+commands:
+  rpgattacksystem:
+    description: Main plugin command
+    usage: /<command> <reload|info>
+    aliases: [ras]
+permissions:
+  rpgattacksystem.reload:
+    description: Reload plugin config
+    default: op
+  rpgattacksystem.info:
+    description: Show plugin info
+    default: op

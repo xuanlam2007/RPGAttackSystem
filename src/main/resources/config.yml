@@ -1,0 +1,29 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#
+#     RPGAttackSystem 1.0 Configuration
+#     Customize behavior for attack system
+#
+#     Author: XuanLam
+#
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Number of consecutive uncharged left-click attacks before disarm effect is triggered
+# Số đòn đánh vi phạm trước khi kích hoạt hiệu ứng tước vũ khí
+shouldApplyFatigueThreshold: 5
+
+# Duration of the disarm effect in game ticks (20 ticks = 1 second)
+# Thời gian hiệu ứng tước vũ khí, tính theo tick
+fatigueDurationTicks: 40
+
+# Interval between disarm messages, in seconds
+# How often the disarm message will reappear while the player is still disarmed
+# Khoảng thời gian giữa các lần gửi tin nhắn khi đang bị tước vũ khí
+disarmMessageIntervalSeconds: 3
+
+# Message displayed when disarm is triggered or on interval
+# Tin nhắn hiển thị khi bị tước vũ khí
+disarmMessage: "&cYou are disarmed—wait a moment before attacking again!"
+
+# Message displayed when player don't have permission to use the command
+# Tin nhắn hiển thị khi người chơi không có quyền sử dụng lệnh
+permissionDeniedMessage: "&cYou don’t have permission to use this command."
